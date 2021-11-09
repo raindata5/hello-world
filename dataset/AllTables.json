@@ -1,0 +1,12 @@
+{
+	"name": "AllTables",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RainData",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}
