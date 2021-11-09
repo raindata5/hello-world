@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"workspaceName": {
+			"value": "synapsews-rd"
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"RainData_connectionString": {
+			"value": ""
+		},
+		"dbdesigndatalake_accountKey": {
+			"value": ""
+		},
+		"synapsews-rd-WorkspaceDefaultSqlServer_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://synapsedatalakerd.dfs.core.windows.net/"
+		},
+		"dbdesigndatalake_properties_typeProperties_url": {
+			"value": "https://dbdatalakerd.dfs.core.windows.net/"
+		},
+		"synapsews-rd-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://synapsedatalakerd.dfs.core.windows.net"
+		}
+	}
+}
