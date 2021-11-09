@@ -1,0 +1,55 @@
+{
+	"name": "Dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Product_in_DataLake",
+						"type": "DatasetReference"
+					},
+					"name": "ProductTable"
+				},
+				{
+					"dataset": {
+						"referenceName": "PCategory_in_DL",
+						"type": "DatasetReference"
+					},
+					"name": "ProductCategoryTable"
+				},
+				{
+					"dataset": {
+						"referenceName": "Supplier_in_DL",
+						"type": "DatasetReference"
+					},
+					"name": "SupplierTable"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "SynapseTableDimProduct",
+						"type": "DatasetReference"
+					},
+					"name": "dimProduct"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AddedProductKey"
+				},
+				{
+					"name": "JoinedCategories"
+				},
+				{
+					"name": "JoinedSuppliers"
+				},
+				{
+					"name": "Select1"
+				}
+			],
+			"script": "source(output(\n\t\t{_col0_} as short,\n\t\t{_col1_} as string,\n\t\t{_col2_} as short,\n\t\t{_col3_} as short,\n\t\t{_col4_} as string,\n\t\t{_col5_} as double,\n\t\t{_col6_} as short,\n\t\t{_col7_} as short,\n\t\t{_col8_} as short,\n\t\t{_col9_} as boolean\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> ProductTable\nsource(output(\n\t\t{_col0_} as short,\n\t\t{_col1_} as string,\n\t\t{_col2_} as string,\n\t\t{_col3_} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> ProductCategoryTable\nsource(output(\n\t\t{_col0_} as short,\n\t\t{_col1_} as string,\n\t\t{_col2_} as string,\n\t\t{_col3_} as string,\n\t\t{_col4_} as string,\n\t\t{_col5_} as string,\n\t\t{_col6_} as string,\n\t\t{_col7_} as string,\n\t\t{_col8_} as string,\n\t\t{_col9_} as string,\n\t\t{_col10_} as string,\n\t\t{_col11_} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> SupplierTable\nProductTable keyGenerate(output(ProductKey as long),\n\tstartAt: 1L) ~> AddedProductKey\nAddedProductKey, ProductCategoryTable join(ProductTable@{_col0_} == ProductCategoryTable@{_col0_},\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> JoinedCategories\nJoinedCategories, SupplierTable join(ProductTable@{_col2_} == SupplierTable@{_col0_},\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> JoinedSuppliers\nJoinedSuppliers select(mapColumn(\n\t\tSourceKey = ProductTable@{_col0_},\n\t\tProductName = ProductTable@{_col1_},\n\t\tQuantityPerUnit = ProductTable@{_col4_},\n\t\tUnitPrice = ProductTable@{_col5_},\n\t\tReorderLevel = ProductTable@{_col8_},\n\t\tDiscontinued = ProductTable@{_col9_},\n\t\tProductKey,\n\t\tCategoryName = ProductCategoryTable@{_col1_},\n\t\tSupplier_CompanyName = SupplierTable@{_col1_},\n\t\tSupplier_ContactName = SupplierTable@{_col2_},\n\t\tSupplier_ContactTitle = SupplierTable@{_col3_},\n\t\tSupplier_Address = SupplierTable@{_col4_},\n\t\tSupplier_City = SupplierTable@{_col5_},\n\t\tSupplier_Region = SupplierTable@{_col6_},\n\t\tSupplier_PostalCode = SupplierTable@{_col7_},\n\t\tSupplier_Country = SupplierTable@{_col8_},\n\t\tSupplier_Phone = SupplierTable@{_col9_}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tProductKey as integer,\n\t\tSourceKey as integer,\n\t\tProductName as string,\n\t\tCategoryName as string,\n\t\tQuantityPerUnit as string,\n\t\tUnitPrice as decimal(19,4),\n\t\tReorderLevel as integer,\n\t\tDiscontinued as boolean,\n\t\tSupplier_CompanyName as string,\n\t\tSupplier_ContactName as string,\n\t\tSupplier_ContactTitle as string,\n\t\tSupplier_Address as string,\n\t\tSupplier_City as string,\n\t\tSupplier_Region as string,\n\t\tSupplier_PostalCode as string,\n\t\tSupplier_Country as string,\n\t\tSupplier_Phone as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tstaged: true,\n\tallowCopyCommand: true,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> dimProduct"
+		}
+	}
+}

@@ -1,0 +1,90 @@
+{
+	"name": "SynapseTableDimProduct",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSynapseAnalyticsDF",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "ProductKey",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SourceKey",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ProductName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CategoryName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "QuantityPerUnit",
+				"type": "nvarchar"
+			},
+			{
+				"name": "UnitPrice",
+				"type": "money",
+				"precision": 19,
+				"scale": 4
+			},
+			{
+				"name": "ReorderLevel",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "Discontinued",
+				"type": "bit"
+			},
+			{
+				"name": "Supplier_CompanyName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Supplier_ContactName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Supplier_ContactTitle",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Supplier_Address",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Supplier_City",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Supplier_Region",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Supplier_PostalCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Supplier_Country",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Supplier_Phone",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "dimProduct"
+		}
+	}
+}

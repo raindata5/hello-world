@@ -1,0 +1,22 @@
+{
+	"name": "PCategory_in_DL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dbdesigndatalake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "Rawdata/[dbo].[ProductCategory]",
+				"fileSystem": "raindata"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
