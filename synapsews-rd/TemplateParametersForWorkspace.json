@@ -8,6 +8,9 @@
 		"AzureDataLakeStorage1_accountKey": {
 			"value": ""
 		},
+		"AzureSynapseAnalyticsDF_connectionString": {
+			"value": ""
+		},
 		"RainData_connectionString": {
 			"value": ""
 		},
@@ -15,9 +18,6 @@
 			"value": ""
 		},
 		"synapsews-rd-WorkspaceDefaultSqlServer_connectionString": {
-			"value": ""
-		},
-		"AzureSynapseAnalyticsDF_connectionString": {
 			"value": ""
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
